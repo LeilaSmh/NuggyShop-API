@@ -13,12 +13,30 @@ use App\Http\Controllers\URLController;
 |
 */
 
+//Laravel Welcome page
 Route::get('/welcome', function () {
     return view('welcome');
 });
 
+
+//My index Page
 Route::get('/', function () {
     return view('pages.index');
 });
 
+//Connection to Woocommerce API
 Route::post('/connect', [URLController::class, 'connect']);
+
+//Navbar
+Route::get('/dashboard', function () {
+    return view('pages.dashboard');
+});
+Route::get('/products', function () {
+    return view('pages.products');
+});
+Route::get('/customers', function () {
+    return view('pages.customers');
+});
+Route::get('/orders', function () {
+    return view('pages.orders');
+});

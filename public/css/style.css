@@ -30,3 +30,20 @@ body {
 nav {
     font-size: 1.5em; 
 }
+
+.mybox {
+    border : 2px solid pink;
+    width : 20vw;
+    height: 30vh; 
+}
+
+.ibox {
+    text-align: center;
+    height: 100%;
+}
+
+.icon-center {
+    margin-top: 1rem;
+    margin-left: auto;
+    margin-right: auto;
+}

@@ -7,14 +7,15 @@ use Automattic\WooCommerce\Client;
 
 class URLController extends Controller
 {
-    public function connect(Request $req){
+    public function connect(Request $req)
+    {
         $validated = $req->validate([
             'store_url' => 'required',
             'ck' => 'required',
             'cs' => 'required',
         ]);
 
-        $woocommerce = new Client( 
+        $woocommerce = new Client(
             $req->input('store_url'),
             $req->input('ck'),
             $req->input('cs'),
@@ -23,7 +24,10 @@ class URLController extends Controller
                 'version' => 'wc/v3'
             ]
         );
+        session(['woocommerce' => $woocommerce]);
 
-        return view('pages.dashboard',['woocommerce' => $woocommerce]);
+        return redirect()->action(
+            [DashController::class, 'count']
+        );
     }
 }
