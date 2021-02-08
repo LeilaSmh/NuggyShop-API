@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Automattic\WooCommerce\Client;
+use Illuminate\Support\Facades\Session;
 
 class URLController extends Controller
 {
@@ -24,10 +25,9 @@ class URLController extends Controller
                 'version' => 'wc/v3'
             ]
         );
-        session(['woocommerce' => $woocommerce]);
+        
+        Session::put('woocommerce', $woocommerce);
 
-        return redirect()->action(
-            [DashController::class, 'count']
-        );
+        return view('pages.dashboard');
     }
 }

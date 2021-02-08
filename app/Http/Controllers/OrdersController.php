@@ -5,14 +5,18 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 
-class ProductsController extends Controller
+class OrdersController extends Controller
 {
-    
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function index()
     {
         $woocommerce = Session::get('woocommerce');
-        $products = $woocommerce->get('products');
-        return view('pages.products')->with('products',$products);
+        $orders = $woocommerce->get('orders');
+        return view('pages.orders')->with('orders',$orders);
     }
 
     /**

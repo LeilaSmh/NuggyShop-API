@@ -1,5 +1,6 @@
+<?php use \App\Http\Controllers\DashController;  ?>
 @extends('layouts.default')
-@section('content')
+@section('content') 
 <div class="container">
     <h1>Dashboard</h1>
     <br /><br />
@@ -13,7 +14,7 @@
                     <line x1="12" y1="22.08" x2="12" y2="12"></line>
                 </svg>
                 <div>
-                    <span style="font-size: 20px;">12</span>
+                    <span style="font-size: 20px;">{{ DashController::count('products')}}</span>
                 </div>
                 <h3>Products</h3>
             </div>
@@ -27,7 +28,7 @@
                     <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
                 </svg>
                 <div>
-                    <span style="font-size: 20px;">12</span>
+                    <span style="font-size: 20px;">{{ DashController::count('customers')}}</span>
                 </div>
                 <h3>Customers</h3>
             </div>
@@ -40,7 +41,7 @@
                     <path d="M16 10a4 4 0 0 1-8 0"></path>
                 </svg>
                 <div>
-                    <span style="font-size: 20px;">12</span>
+                    <span style="font-size: 20px;">{{ DashController::count('orders')}}</span>
                 </div>
                 <h3>Orders</h3>
             </div>

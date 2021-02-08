@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ProductsController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\URLController;
 /*
@@ -31,9 +32,8 @@ Route::post('/connect', [URLController::class, 'connect']);
 Route::get('/dashboard', function () {
     return view('pages.dashboard');
 });
-Route::get('/products', function () {
-    return view('pages.products');
-});
+Route::get('/products', [ProductsController::class, 'index']);
+
 Route::get('/customers', function () {
     return view('pages.customers');
 });
