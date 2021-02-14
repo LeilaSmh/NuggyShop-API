@@ -20,9 +20,53 @@ class ProductsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $req)
     {
-        //
+        $validated = $req->validate([
+            'name' => 'required',
+            'regular_price' => 'required',
+        ]);
+        
+        $name = $req->input('name');
+        $type = $req->input('type');
+        $regular_price = $req->input('regular_price');
+        $description = $req->input('description');
+        $category = $req->input('category');
+        $image = $req->input('image');
+        
+        if($type == null){
+            $type = 'simple';
+        }elseif ($description == null) {
+            $description = 'Lorem Impsum';
+        }elseif ($category == null) {
+            $category = 15;
+        }elseif ($image == null) {
+            $image = '';
+        }
+
+        $data = [
+            'name' => $name,
+            'type' => $type,
+            'regular_price' => $regular_price,
+            'description' => $description,
+            'categories' => [
+                [
+                    'id' => $category
+                ]
+            ],
+            'images' => [
+                [
+                    'src' => $image
+                ]
+            ]
+        ];
+        $woocommerce = Session::get('woocommerce');
+        if($woocommerce->post('products',$data)){
+            return redirect('/products');
+        };
+        return "error";
+
+
     }
 
     /**
@@ -33,7 +77,7 @@ class ProductsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        
     }
 
     /**

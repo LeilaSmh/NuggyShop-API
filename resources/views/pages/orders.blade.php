@@ -1,7 +1,16 @@
 @extends('layouts.default')
 @section('content')
-<div class="container">
-    <h1>Orders List</h2>
+<div class="container"><div class="d-flex flex-row justify-content-around">
+        <h1>Customers List</h1>
+        <div style="height: 100%; padding-top: 15px;">
+            <a href="/customer/add">
+                <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="#03fc7f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus">
+                    <line x1="12" y1="5" x2="12" y2="19"></line>
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                </svg>
+            </a>
+        </div>
+    </div>
         <div class='table-responsive'>
             <table id='myTable' class='table table-striped table-bordered'>
                 <thead>

@@ -1,4 +1,10 @@
-@extends('layouts.default')
+<?php
+use Illuminate\Support\Facades\Session;
+Session::flush();
+Session::start();
+?>
+
+@extends('layouts.index')
 @section('content')
 <div class="container">
     <h1>Connect to WooCommerce</h1>
