@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\MyClasses\Woocommerce;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 
@@ -14,9 +15,8 @@ class CustomersController extends Controller
      */
     public function index()
     {
-        $woocommerce = Session::get('woocommerce');
-        $customers = $woocommerce->get('customers');
-        return view('pages.customers')->with('customers',$customers);
+        $customers = Woocommerce::getList('customers');
+        return view('pages.customers')->with('customers', $customers);
     }
 
     /**
@@ -26,7 +26,7 @@ class CustomersController extends Controller
      */
     public function create()
     {
-        //
+        return view('actions.addCustomer');
     }
 
     /**
@@ -37,7 +37,34 @@ class CustomersController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'code' => 'required',
+        ]);
+
+        $code = $request->input('code');
+        $amount = $request->input('amount');
+        $min = $request->input('min');
+        $type = $request->input('type');
+        $use = $request->input('use');
+        $sale = $request->input('sale');
+
+        if ($amount == null) {
+            $amount = '0.00';
+        } elseif ($min == null) {
+            $min = '0.00';
+        }
+
+        $data = [
+            'code' => $code,
+            'discount_type' => $type,
+            'amount' => $amount,
+            'individual_use' => $use,
+            'exclude_sale_items' => $sale,
+            'minimum_amount' => $min
+        ];
+
+        Woocommerce::create('customers', $data);
+        return redirect('/customers');
     }
 
     /**
@@ -48,7 +75,8 @@ class CustomersController extends Controller
      */
     public function show($id)
     {
-        //
+        $customer = Woocommerce::getItem('customers', $id);
+        return view('details.customer')->with('customer', $customer);
     }
 
     /**
@@ -59,7 +87,8 @@ class CustomersController extends Controller
      */
     public function edit($id)
     {
-        //
+        $customer = Woocommerce::getItem('customers', $id);
+        return view('actions.editCustomer')->with('customer', $customer);
     }
 
     /**
@@ -71,7 +100,28 @@ class CustomersController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $amount = $request->input('amount');
+        $min = $request->input('min');
+        $type = $request->input('type');
+        $use = $request->input('use');
+        $sale = $request->input('sale');
+
+        if ($amount == null) {
+            $amount = '0.00';
+        } elseif ($min == null) {
+            $min = '0.00';
+        }
+
+        $data = [
+            'discount_type' => $type,
+            'amount' => $amount,
+            'individual_use' => $use,
+            'exclude_sale_items' => $sale,
+            'minimum_amount' => $min
+        ];
+
+        Woocommerce::setItem('customers', $id, $data);
+        return redirect()->action([CustomersController::class,'show'],[$id]);
     }
 
     /**
@@ -82,6 +132,7 @@ class CustomersController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Woocommerce::deleteItem('customers', $id);
+        return redirect('/customers');
     }
 }

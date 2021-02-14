@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\MyClasses\Woocommerce;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 
@@ -14,9 +15,8 @@ class OrdersController extends Controller
      */
     public function index()
     {
-        $woocommerce = Session::get('woocommerce');
-        $orders = $woocommerce->get('orders');
-        return view('pages.orders')->with('orders',$orders);
+        $orders = Woocommerce::getList('orders');
+        return view('pages.orders')->with('orders', $orders);
     }
 
     /**
@@ -26,7 +26,7 @@ class OrdersController extends Controller
      */
     public function create()
     {
-        //
+        return view('actions.addOrder');
     }
 
     /**
@@ -37,7 +37,34 @@ class OrdersController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'code' => 'required',
+        ]);
+
+        $code = $request->input('code');
+        $amount = $request->input('amount');
+        $min = $request->input('min');
+        $type = $request->input('type');
+        $use = $request->input('use');
+        $sale = $request->input('sale');
+
+        if ($amount == null) {
+            $amount = '0.00';
+        } elseif ($min == null) {
+            $min = '0.00';
+        }
+
+        $data = [
+            'code' => $code,
+            'discount_type' => $type,
+            'amount' => $amount,
+            'individual_use' => $use,
+            'exclude_sale_items' => $sale,
+            'minimum_amount' => $min
+        ];
+
+        Woocommerce::create('orders', $data);
+        return redirect('/orders');
     }
 
     /**
@@ -48,7 +75,8 @@ class OrdersController extends Controller
      */
     public function show($id)
     {
-        //
+        $order = Woocommerce::getItem('orders', $id);
+        return view('details.order')->with('order', $order);
     }
 
     /**
@@ -59,7 +87,8 @@ class OrdersController extends Controller
      */
     public function edit($id)
     {
-        //
+        $order = Woocommerce::getItem('orders', $id);
+        return view('actions.editOrder')->with('order', $order);
     }
 
     /**
@@ -71,7 +100,28 @@ class OrdersController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $amount = $request->input('amount');
+        $min = $request->input('min');
+        $type = $request->input('type');
+        $use = $request->input('use');
+        $sale = $request->input('sale');
+
+        if ($amount == null) {
+            $amount = '0.00';
+        } elseif ($min == null) {
+            $min = '0.00';
+        }
+
+        $data = [
+            'discount_type' => $type,
+            'amount' => $amount,
+            'individual_use' => $use,
+            'exclude_sale_items' => $sale,
+            'minimum_amount' => $min
+        ];
+
+        Woocommerce::setItem('orders', $id, $data);
+        return redirect()->action([OrdersController::class,'show'],[$id]);
     }
 
     /**
@@ -82,6 +132,7 @@ class OrdersController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Woocommerce::deleteItem('orders', $id);
+        return redirect('/orders');
     }
 }

@@ -8,12 +8,11 @@ use Illuminate\Support\Facades\Session;
 
 class ProductsController extends Controller
 {
-    
+
     public function index()
     {
-        $woocommerce = Session::get('woocommerce');
-        $products = $woocommerce->get('products');
-        return view('pages.products')->with('products',$products);
+        $products = Woocommerce::getList('products');
+        return view('pages.products')->with('products', $products);
     }
 
     /**
@@ -21,27 +20,38 @@ class ProductsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(Request $req)
+    public function create(Request $request)
     {
-        $validated = $req->validate([
+        return view('actions.addProduct');
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        $validated = $request->validate([
             'name' => 'required',
             'regular_price' => 'required',
         ]);
-        
-        $name = $req->input('name');
-        $type = $req->input('type');
-        $regular_price = $req->input('regular_price');
-        $description = $req->input('description');
-        $category = $req->input('category');
-        $image = $req->input('image');
-        
-        if($type == null){
+
+        $name = $request->input('name');
+        $type = $request->input('type');
+        $regular_price = $request->input('regular_price');
+        $description = $request->input('description');
+        $category = $request->input('category');
+        $image = $request->input('image');
+
+        if ($type == null) {
             $type = 'simple';
-        }elseif ($description == null) {
+        } elseif ($description == null) {
             $description = 'Lorem Impsum';
-        }elseif ($category == null) {
+        } elseif ($category == null) {
             $category = 15;
-        }elseif ($image == null) {
+        } elseif ($image == null) {
             $image = '';
         }
 
@@ -61,21 +71,9 @@ class ProductsController extends Controller
                 ]
             ]
         ];
-        
-        Woocommerce::create('coupons',$data);
+
+        Woocommerce::create('coupons', $data);
         return redirect('/coupons');
-
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        
     }
 
     /**
@@ -86,7 +84,8 @@ class ProductsController extends Controller
      */
     public function show($id)
     {
-        //
+        $product = Woocommerce::getItem('products', $id);
+        return view('details.product')->with('product', $product);
     }
 
     /**
@@ -97,7 +96,8 @@ class ProductsController extends Controller
      */
     public function edit($id)
     {
-        //
+        $product = Woocommerce::getItem('products', $id);
+        return view('actions.editProduct')->with('product', $product);
     }
 
     /**
@@ -109,7 +109,28 @@ class ProductsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $amount = $request->input('amount');
+        $min = $request->input('min');
+        $type = $request->input('type');
+        $use = $request->input('use');
+        $sale = $request->input('sale');
+
+        if ($amount == null) {
+            $amount = '0.00';
+        } elseif ($min == null) {
+            $min = '0.00';
+        }
+
+        $data = [
+            'discount_type' => $type,
+            'amount' => $amount,
+            'individual_use' => $use,
+            'exclude_sale_items' => $sale,
+            'minimum_amount' => $min
+        ];
+
+        Woocommerce::setItem('products', $id, $data);
+        return redirect()->action([ProductsController::class, 'show'], [$id]);
     }
 
     /**
@@ -120,6 +141,7 @@ class ProductsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Woocommerce::deleteItem('products', $id);
+        return redirect('/products');
     }
 }
