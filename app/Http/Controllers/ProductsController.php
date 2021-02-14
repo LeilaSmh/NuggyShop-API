@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\MyClasses\Woocommerce;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 
@@ -20,9 +21,50 @@ class ProductsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $req)
     {
-        //
+        $validated = $req->validate([
+            'name' => 'required',
+            'regular_price' => 'required',
+        ]);
+        
+        $name = $req->input('name');
+        $type = $req->input('type');
+        $regular_price = $req->input('regular_price');
+        $description = $req->input('description');
+        $category = $req->input('category');
+        $image = $req->input('image');
+        
+        if($type == null){
+            $type = 'simple';
+        }elseif ($description == null) {
+            $description = 'Lorem Impsum';
+        }elseif ($category == null) {
+            $category = 15;
+        }elseif ($image == null) {
+            $image = '';
+        }
+
+        $data = [
+            'name' => $name,
+            'type' => $type,
+            'regular_price' => $regular_price,
+            'description' => $description,
+            'categories' => [
+                [
+                    'id' => $category
+                ]
+            ],
+            'images' => [
+                [
+                    'src' => $image
+                ]
+            ]
+        ];
+        
+        Woocommerce::create('coupons',$data);
+        return redirect('/coupons');
+
     }
 
     /**
@@ -33,7 +75,7 @@ class ProductsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        
     }
 
     /**

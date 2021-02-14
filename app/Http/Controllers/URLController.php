@@ -27,7 +27,13 @@ class URLController extends Controller
         );
         
         Session::put('woocommerce', $woocommerce);
-
-        return view('pages.dashboard');
+        
+        return redirect('/dashboard');
     }
+
+    public function logout()
+    {
+        Session::flush();
+        return redirect('/');
+    } 
 }
