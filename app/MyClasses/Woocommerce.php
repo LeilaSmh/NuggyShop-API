@@ -19,15 +19,22 @@ class Woocommerce
         return $woocommerce->get($item);
     }
 
-    public static function create($item,$data){
+    public static function create($item, $data)
+    {
         $woocommerce = Woocommerce::init();
         return $woocommerce->post($item, $data);
     }
-    
+
     public static function getItem($item, $id)
     {
         $woocommerce = Woocommerce::init();
         return $woocommerce->get($item . '/' . $id);
+    }
+
+    public static function setItem($item, $id, $data)
+    {
+        $woocommerce = Woocommerce::init();
+        return $woocommerce->put($item . '/' . $id, $data);
     }
 
     public static function deleteItem($item, $id)

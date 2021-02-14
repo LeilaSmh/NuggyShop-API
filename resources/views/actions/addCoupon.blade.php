@@ -2,6 +2,7 @@
 @section('content')
 <div class="container">
     <h1>Add a Coupon</h1>
+    <br />
     <form action="/coupons" method="POST">
         <div class="form-group">
 
@@ -35,11 +36,11 @@
                     <label class="form-check-label" for="percent">Percent</label>
                 </div>
                 <div class="form-check">
-                    <input class="form-check-input" type="radio" id="fixed_product" name="type" value="product">
+                    <input class="form-check-input" type="radio" id="fixed_product" name="type" value="fixed_product">
                     <label class="form-check-label" for="fixed_product">Fixed Product</label>
                 </div>
                 <div class="form-check">
-                    <input class="form-check-input" type="radio" id="fixed_cart" name="type" value="cart">
+                    <input class="form-check-input" type="radio" id="fixed_cart" name="type" value="fixed_cart">
                     <label class="form-check-label" for="fixed_cart">Fixed Cart</label>
                 </div>
             </div>
@@ -67,8 +68,9 @@
 
             </div>
         </div>
-        <div class="col-md-12 text-center p-4" >
-        <button type="submit" class="btn btn-light " name="add_coupon">Add</button>
+        <div class="col-md-12 text-center p-4">
+            <button type="submit" class="btn btn-light " name="add_coupon">Add</button>
+            <a href="{{ URL('/coupons') }}"><button class="btn btn-light">Back</button></a>
         </div>
     </form>
     <br>

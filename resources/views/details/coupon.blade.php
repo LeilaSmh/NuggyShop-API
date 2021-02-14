@@ -15,7 +15,7 @@
                         <td>{{$coupon->discount_type}}</td>
                     </tr>
                     <tr>
-                        <th ><strong>Amount</strong></th>
+                        <th><strong>Amount</strong></th>
                         <td>{{$coupon->amount}}</td>
                     </tr>
                     <tr>
@@ -39,11 +39,15 @@
                         </td>
                     </tr>
                     <tr>
-                        <th ><strong>Minimum Amount</strong></th>
+                        <th><strong>Minimum Amount</strong></th>
                         <td>{{$coupon->minimum_amount}}</td>
                     </tr>
+
                 </tbody>
             </table>
+            <div class="col-md-12 text-center p-4">
+                <a href="{{ URL('/coupons') }}"><button class="btn btn-light">Back</button></a>
+            </div>
         </div>
     </div>
 </div>

@@ -49,7 +49,7 @@
                     <td>{{$coupon->minimum_amount}}</td>
                     <td>
                         <a class='btn btn-info' href="{{ URL('/coupon/'.$coupon->id )}}">Show</a>
-                        <a class='btn btn-warning' href="{{URL('/coupon/'.$coupon->id.'/edit' )}}">Update</a>
+                        <a class='btn btn-warning' href="{{ URL('/coupon/'.$coupon->id.'/edit' )}}">Update</a>
                         <a class='btn btn-danger' href="{{ URL('/coupons/'.$coupon->id )}}">Delete</a>
                         
                     </td>

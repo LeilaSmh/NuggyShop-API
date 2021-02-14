@@ -49,7 +49,7 @@ class CouponsController extends Controller
         $sale = $request->input('sale');
 
         if ($amount == null) {
-            $type = '0.00';
+            $amount = '0.00';
         } elseif ($min == null) {
             $min = '0.00';
         }
@@ -75,7 +75,7 @@ class CouponsController extends Controller
      */
     public function show($id)
     {
-        $coupon = Woocommerce::getItem('coupons',$id);
+        $coupon = Woocommerce::getItem('coupons', $id);
         return view('details.coupon')->with('coupon', $coupon);
     }
 
@@ -87,7 +87,8 @@ class CouponsController extends Controller
      */
     public function edit($id)
     {
-        return view('actions.editCoupon');
+        $coupon = Woocommerce::getItem('coupons', $id);
+        return view('actions.editCoupon')->with('coupon', $coupon);
     }
 
     /**
@@ -99,7 +100,28 @@ class CouponsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $amount = $request->input('amount');
+        $min = $request->input('min');
+        $type = $request->input('type');
+        $use = $request->input('use');
+        $sale = $request->input('sale');
+
+        if ($amount == null) {
+            $amount = '0.00';
+        } elseif ($min == null) {
+            $min = '0.00';
+        }
+
+        $data = [
+            'discount_type' => $type,
+            'amount' => $amount,
+            'individual_use' => $use,
+            'exclude_sale_items' => $sale,
+            'minimum_amount' => $min
+        ];
+
+        Woocommerce::setItem('coupons', $id, $data);
+        return redirect()->action([CouponsController::class,'show'],[$id]);
     }
 
     /**

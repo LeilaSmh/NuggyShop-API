@@ -51,18 +51,39 @@ Route::middleware([CheckSession::class], [RevalidateBackHistory::class])->group(
 
     //Create
     Route::get('/coupons/create', [CouponsController::class, 'create']);
+    Route::get('/products/create', [ProductsController::class, 'create']);
+    Route::get('/customers/create', [CustomersController::class, 'create']);
+    Route::get('/orders/create', [OrdersController::class, 'create']);
 
     //Store
     Route::post('/coupons', [CouponsController::class, 'store']);
+    Route::post('/products', [ProductsController::class, 'store']);
+    Route::post('/customers', [CustomersController::class, 'store']);
+    Route::post('/orders', [OrdersController::class, 'store']);
 
     //Show
     Route::get('/coupon/{id}', [CouponsController::class, 'show']);
+    Route::get('/product/{id}', [ProductsController::class, 'show']);
+    Route::get('/customer/{id}', [CustomersController::class, 'show']);
+    Route::get('/order/{id}', [OrdersController::class, 'show']);
 
     //Edit
     Route::get('/coupon/{id}/edit', [CouponsController::class, 'edit']);
-    
+    Route::get('/product/{id}/edit', [ProductsController::class, 'edit']);
+    Route::get('/customer/{id}/edit', [CustomersController::class, 'edit']);
+    Route::get('/order/{id}/edit', [OrdersController::class, 'edit']);
+
+    //Update
+    Route::get('/coupon/{id}/update', [CouponsController::class, 'update']);
+    Route::get('/product/{id}/update', [ProductsController::class, 'update']);
+    Route::get('/customer/{id}/update', [CustomersController::class, 'update']);
+    Route::get('/order/{id}/update', [OrdersController::class, 'update']);
+
     //Delete
     Route::get('/coupons/{id}', [CouponsController::class, 'destroy']);
+    Route::get('/products/{id}', [ProductsController::class, 'destroy']);
+    Route::get('/customers/{id}', [CustomersController::class, 'destroy']);
+    Route::get('/orders/{id}', [OrdersController::class, 'destroy']);
 
     //Invalid URLs
     Route::get('/{any}', function () {

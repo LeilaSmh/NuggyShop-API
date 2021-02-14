@@ -4,7 +4,7 @@
     <div class="d-flex flex-row justify-content-around">
         <h1>Customers List</h1>
         <div style="height: 100%; padding-top: 15px;">
-            <a href="/order/add">
+            <a href="/orders/create">
                 <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="#03fc7f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus">
                     <line x1="12" y1="5" x2="12" y2="19"></line>
                     <line x1="5" y1="12" x2="19" y2="12"></line>
@@ -31,8 +31,11 @@
                     <td>{{$customer->first_name}} {{$customer->last_name}}</td>
                     <td>{{$customer->billing->address_1}}</td>
                     <td><img style="height:50px;width:50px;" src="{{$customer->avatar_url}}"></td>
-                    <td><a class='open-AddBookDialog btn btn-primary' data-target='#myModal' data-id=".$customer['id']." data-toggle='modal'>Update</a>
-                        <a class='open-deleteDialog btn btn-danger' data-target='#myModal1' data-id=".$customer['id']." data-toggle='modal'>Delete</a>
+                    <td>
+                        <a class='btn btn-info' href="{{ URL('/customer/'.$customer->id )}}">Show</a>
+                        <a class='btn btn-warning' href="{{ URL('/customer/'.$customer->id.'/edit' )}}">Update</a>
+                        <a class='btn btn-danger' href="{{ URL('/customers/'.$customer->id )}}">Delete</a>
+                        
                     </td>
                 </tr>
                 @endforeach

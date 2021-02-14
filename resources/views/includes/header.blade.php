@@ -12,10 +12,10 @@
         <a class="nav-link" href="/coupons">Coupons</a>
       </li>
       <li class="nav-item active">
-        <a class="nav-link" href="/products">Products</a>
+        <a class="nav-link" href="/customers">Customers</a>
       </li>
       <li class="nav-item active">
-        <a class="nav-link" href="/customers">Customers</a>
+        <a class="nav-link" href="/products">Products</a>
       </li>
       <li class="nav-item active">
         <a class="nav-link" href="/orders">Orders</a>

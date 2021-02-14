@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\MyClasses\Woocommerce;
 use Illuminate\Http\Request;
 use Automattic\WooCommerce\HttpClient\HttpClientException;
 use Illuminate\Support\Facades\Session;
@@ -10,7 +11,7 @@ class DashController extends Controller
 {
     public static function count($item)
     {
-        $woocommerce = Session::get('woocommerce');
+        $woocommerce = Woocommerce::init();
 
         if (isset($woocommerce)) {
             try {

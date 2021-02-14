@@ -57,7 +57,6 @@ if (Session::get('woocommerce') == null)
         svg,
         video {
             display: block;
-            vertical-align: middle
         }
 
         video {
