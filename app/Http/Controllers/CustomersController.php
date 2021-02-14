@@ -38,32 +38,59 @@ class CustomersController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'code' => 'required',
+            'user' => 'required',
+            'email' => 'required',
+            'phone' => 'required',
+            'first' => 'required',
+            'last' => 'required',
+            'add1' => 'required',
+            'country' => 'required',
+            'city' => 'required',
+            'postal' => 'required',
         ]);
 
-        $code = $request->input('code');
-        $amount = $request->input('amount');
-        $min = $request->input('min');
-        $type = $request->input('type');
-        $use = $request->input('use');
-        $sale = $request->input('sale');
-
-        if ($amount == null) {
-            $amount = '0.00';
-        } elseif ($min == null) {
-            $min = '0.00';
-        }
+        $email = $request->input('email');
+        $first = $request->input('first');
+        $last = $request->input('last');
+        $user = $request->input('user');
+        $add1 = $request->input('add1');
+        $add2 = $request->input('add2');
+        $city = $request->input('city');
+        $postal = $request->input('postal');
+        $country = $request->input('country');
+        $phone = $request->input('phone');
 
         $data = [
-            'code' => $code,
-            'discount_type' => $type,
-            'amount' => $amount,
-            'individual_use' => $use,
-            'exclude_sale_items' => $sale,
-            'minimum_amount' => $min
+            'email' => $email,
+            'first_name' => $first,
+            'last_name' => $last,
+            'username' => $user,
+            'billing' => [
+                'first_name' => $first,
+                'last_name' => $last,
+                'company' => '',
+                'address_1' => $add1,
+                'address_2' => $add2,
+                'city' => $city,
+                'state' => 'CA',
+                'postcode' => $postal,
+                'country' => $country,
+                'email' => $email,
+                'phone' => $phone,
+            ],
+            'shipping' => [
+                'first_name' => $first,
+                'last_name' => $last,
+                'address_1' => $add1,
+                'address_2' => $add2,
+                'city' => $city,
+                'state' => 'CA',
+                'postcode' => $postal,
+                'country' => $country,
+            ]
         ];
 
-        Woocommerce::create('customers', $data);
+        //Woocommerce::create('customers', $data);
         return redirect('/customers');
     }
 
@@ -100,28 +127,7 @@ class CustomersController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $amount = $request->input('amount');
-        $min = $request->input('min');
-        $type = $request->input('type');
-        $use = $request->input('use');
-        $sale = $request->input('sale');
-
-        if ($amount == null) {
-            $amount = '0.00';
-        } elseif ($min == null) {
-            $min = '0.00';
-        }
-
-        $data = [
-            'discount_type' => $type,
-            'amount' => $amount,
-            'individual_use' => $use,
-            'exclude_sale_items' => $sale,
-            'minimum_amount' => $min
-        ];
-
-        Woocommerce::setItem('customers', $id, $data);
-        return redirect()->action([CustomersController::class,'show'],[$id]);
+        return redirect()->action([CustomersController::class, 'show'], [$id]);
     }
 
     /**

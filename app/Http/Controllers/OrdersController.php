@@ -37,33 +37,6 @@ class OrdersController extends Controller
      */
     public function store(Request $request)
     {
-        $validated = $request->validate([
-            'code' => 'required',
-        ]);
-
-        $code = $request->input('code');
-        $amount = $request->input('amount');
-        $min = $request->input('min');
-        $type = $request->input('type');
-        $use = $request->input('use');
-        $sale = $request->input('sale');
-
-        if ($amount == null) {
-            $amount = '0.00';
-        } elseif ($min == null) {
-            $min = '0.00';
-        }
-
-        $data = [
-            'code' => $code,
-            'discount_type' => $type,
-            'amount' => $amount,
-            'individual_use' => $use,
-            'exclude_sale_items' => $sale,
-            'minimum_amount' => $min
-        ];
-
-        Woocommerce::create('orders', $data);
         return redirect('/orders');
     }
 
@@ -100,27 +73,7 @@ class OrdersController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $amount = $request->input('amount');
-        $min = $request->input('min');
-        $type = $request->input('type');
-        $use = $request->input('use');
-        $sale = $request->input('sale');
-
-        if ($amount == null) {
-            $amount = '0.00';
-        } elseif ($min == null) {
-            $min = '0.00';
-        }
-
-        $data = [
-            'discount_type' => $type,
-            'amount' => $amount,
-            'individual_use' => $use,
-            'exclude_sale_items' => $sale,
-            'minimum_amount' => $min
-        ];
-
-        Woocommerce::setItem('orders', $id, $data);
+        
         return redirect()->action([OrdersController::class,'show'],[$id]);
     }
 
