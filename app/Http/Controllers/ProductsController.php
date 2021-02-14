@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\MyClasses\Woocommerce;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 
@@ -60,12 +61,9 @@ class ProductsController extends Controller
                 ]
             ]
         ];
-        $woocommerce = Session::get('woocommerce');
-        if($woocommerce->post('products',$data)){
-            return redirect('/products');
-        };
-        return "error";
-
+        
+        Woocommerce::create('coupons',$data);
+        return redirect('/coupons');
 
     }
 

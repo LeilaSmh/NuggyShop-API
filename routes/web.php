@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CouponsController;
 use App\Http\Controllers\ProductsController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\URLController;
@@ -34,9 +35,9 @@ Route::get('/', function () {
 //Connection to Woocommerce API
 Route::post('/connect', [URLController::class, 'connect']);
 
-Route::middleware([CheckSession::class],[RevalidateBackHistory::class])->group(function () {
+Route::middleware([CheckSession::class], [RevalidateBackHistory::class])->group(function () {
 
-    ///Logout from Woocommerce API
+    //Logout from Woocommerce API
     Route::get('/logout', [URLController::class, 'logout']);
 
     //Navbar
@@ -49,17 +50,21 @@ Route::middleware([CheckSession::class],[RevalidateBackHistory::class])->group(f
     Route::get('/orders', [OrdersController::class, 'index']);
 
     //Create
-    Route::get('/addproduct', function () {
-        return view('pages.add-product');
-    });
-    Route::post('/createprod', [ProductsController::class, 'create']);
+    Route::get('/coupons/create', [CouponsController::class, 'create']);
 
-    Route::get('/customer/add', function () {
-        return view('pages.addCustomer');
-    });
-    Route::get('/order/add', function () {
-        return view('pages.addOrder');
-    });
+    //Store
+    Route::post('/coupons', [CouponsController::class, 'store']);
+
+    //Show
+    Route::get('/coupon/{id}', [CouponsController::class, 'show']);
+
+    //Edit
+    Route::get('/coupon/{id}/edit', [CouponsController::class, 'edit']);
+    
+    //Delete
+    Route::get('/coupons/{id}', [CouponsController::class, 'destroy']);
+
+    //Invalid URLs
     Route::get('/{any}', function () {
         return redirect('/');
     });

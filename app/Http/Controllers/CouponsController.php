@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\MyClasses\Woocommerce;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class CouponsController extends Controller
 {
@@ -13,7 +15,8 @@ class CouponsController extends Controller
      */
     public function index()
     {
-        //
+        $coupons = Woocommerce::getList('coupons');
+        return view('pages.coupons')->with('coupons', $coupons);
     }
 
     /**
@@ -23,7 +26,7 @@ class CouponsController extends Controller
      */
     public function create()
     {
-        //
+        return view('actions.addCoupon');
     }
 
     /**
@@ -34,7 +37,34 @@ class CouponsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'code' => 'required',
+        ]);
+
+        $code = $request->input('code');
+        $amount = $request->input('amount');
+        $min = $request->input('min');
+        $type = $request->input('type');
+        $use = $request->input('use');
+        $sale = $request->input('sale');
+
+        if ($amount == null) {
+            $type = '0.00';
+        } elseif ($min == null) {
+            $min = '0.00';
+        }
+
+        $data = [
+            'code' => $code,
+            'discount_type' => $type,
+            'amount' => $amount,
+            'individual_use' => $use,
+            'exclude_sale_items' => $sale,
+            'minimum_amount' => $min
+        ];
+
+        Woocommerce::create('coupons', $data);
+        return redirect('/coupons');
     }
 
     /**
@@ -45,7 +75,8 @@ class CouponsController extends Controller
      */
     public function show($id)
     {
-        //
+        $coupon = Woocommerce::getItem('coupons',$id);
+        return view('details.coupon')->with('coupon', $coupon);
     }
 
     /**
@@ -56,7 +87,7 @@ class CouponsController extends Controller
      */
     public function edit($id)
     {
-        //
+        return view('actions.editCoupon');
     }
 
     /**
@@ -79,6 +110,7 @@ class CouponsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Woocommerce::deleteItem('coupons', $id);
+        return redirect('/coupons');
     }
 }
