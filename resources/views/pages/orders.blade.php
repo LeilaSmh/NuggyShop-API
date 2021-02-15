@@ -2,7 +2,7 @@
 @section('content')
 <div class="container">
     <div class="d-flex flex-row justify-content-around">
-        <h1>Customers List</h1>
+        <h1>Orders List</h1>
         <div style="height: 100%; padding-top: 15px;">
             <a href="/orders/create">
                 <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="#03fc7f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus">

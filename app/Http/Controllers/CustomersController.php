@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\MyClasses\Woocommerce;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Str;
 
 class CustomersController extends Controller
 {
@@ -60,6 +61,8 @@ class CustomersController extends Controller
         $country = $request->input('country');
         $phone = $request->input('phone');
 
+        $add2 = Str::length($add2) > 0 ? $add2 : '';
+        
         $data = [
             'email' => $email,
             'first_name' => $first,
@@ -72,7 +75,7 @@ class CustomersController extends Controller
                 'address_1' => $add1,
                 'address_2' => $add2,
                 'city' => $city,
-                'state' => 'CA',
+                'state' => 'MA',
                 'postcode' => $postal,
                 'country' => $country,
                 'email' => $email,
@@ -90,7 +93,7 @@ class CustomersController extends Controller
             ]
         ];
 
-        //Woocommerce::create('customers', $data);
+        Woocommerce::create('customers', $data);
         return redirect('/customers');
     }
 

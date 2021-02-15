@@ -24,27 +24,27 @@
                     </tr>
                     <tr>
                         <th><strong>Phone</strong></th>
-                        <td>{{$customer->phone}}</td>
+                        <td>{{$customer->billing->phone}}</td>
                     </tr>
                     <tr>
                         <th><strong>Address 1</strong></th>
-                        <td>{{$customer->address_1}}</td>
+                        <td>{{$customer->billing->address_1}}</td>
                     </tr>
                     <tr>
                         <th><strong>Address 2</strong></th>
-                        <td>{{$customer->address_2}}</td>
+                        <td>{{$customer->billing->address_2}}</td>
                     </tr>
                     <tr>
                         <th><strong>Country</strong></th>
-                        <td>{{$customer->county}}</td>
+                        <td>{{$customer->billing->country}}</td>
                     </tr>
                     <tr>
                         <th><strong>City</strong></th>
-                        <td>{{$customer->city}}</td>
+                        <td>{{$customer->billing->city}}</td>
                     </tr>
                     <tr>
                         <th><strong>Postal Code</strong></th>
-                        <td>{{$customer->postcode}}</td>
+                        <td>{{$customer->billing->postcode}}</td>
                     </tr>
                 </tbody>
             </table>
