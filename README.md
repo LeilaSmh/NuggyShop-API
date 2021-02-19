@@ -26,4 +26,5 @@ You can now access the server at http://localhost:8000
 
 ## How To Use
 On the index page you need to provide a URL to a Web App using Woocommerce API and the Consumer Keys
-for more information check the Woocommerce API official documentation : https://docs.woocommerce.com/document/woocommerce-rest-api/
+
+For more information check the Woocommerce API official documentation : https://docs.woocommerce.com/document/woocommerce-rest-api/
